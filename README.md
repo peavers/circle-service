@@ -4,7 +4,7 @@ The beginning of a new social network type thing that's more like Slack than Fac
 ## Badges
 The most important part of a readme of course
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1ec155d8109e4a0bbd87388f095679f8)](https://www.codacy.com/app/peavers/codeshelf-tool-eslint?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=peavers/codeshelf-tool-eslint&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/931d0f85c1c84e93bf022313d8a7143c)](https://www.codacy.com/app/peavers/circle-service?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=peavers/circle-service&amp;utm_campaign=Badge_Grade)
 
 ## Why
 I wanted a pet project to get stuck into after hours and I liked the idea of building something similar to a social network. It has many complex
