@@ -1,0 +1,18 @@
+spring:
+  main:
+    web-application-type: reactive
+  rabbitmq:
+    template:
+      exchange: "circle-service-exchange"
+      routing-key: "circleId.#"
+      default-receive-queue: "new-posts"
+  data:
+    mongodb:
+      database: "circles"
+
+okta:
+  oauth2:
+    issuer: ${OKTA_ISSUER}
+    client-id: ${OKTA_CLIENT_ID}
+    client-secret: ${OKTA_SECRET}
+    groups-claim: "groups"
