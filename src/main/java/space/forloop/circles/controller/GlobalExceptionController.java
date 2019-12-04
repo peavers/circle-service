@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 /**
- * Handles common exceptions that can be thrown any service such as bad formatted request, or
- * duplication exception.
+ * Handles common exceptions that can be thrown any service such as bad formatted request, or duplication exception.
  *
  * @author Chris Turner (chris@forloop.space)
  */
@@ -18,14 +17,16 @@ import reactor.core.publisher.Mono;
 @ControllerAdvice
 public class GlobalExceptionController {
 
-  /**
-   * Mongo has unique indexes enabled on the value a user has tried to create. Throw this instead.
-   *
-   * @return bad request
-   */
-  @ResponseStatus(HttpStatus.CONFLICT)
-  @ExceptionHandler(MongoWriteException.class)
-  public Mono<String> handleDuplicateKeyException() {
-    return Mono.just(HttpStatus.CONFLICT.getReasonPhrase());
-  }
+    /**
+     * Mongo has unique indexes enabled on the value a user has tried to create. Throw this instead.
+     *
+     * @return bad request
+     */
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(MongoWriteException.class)
+    public Mono<String> handleDuplicateKeyException() {
+
+        return Mono.just(HttpStatus.CONFLICT.getReasonPhrase());
+    }
+
 }

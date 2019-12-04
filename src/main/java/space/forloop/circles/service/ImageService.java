@@ -5,10 +5,13 @@ import reactor.core.publisher.Mono;
 
 import java.io.InputStream;
 
-/** @author Chris Turner (chris@forloop.space) */
+/**
+ * @author Chris Turner (chris@forloop.space)
+ */
 public interface ImageService {
 
-  Mono<String> uploadFromStream(String filename, InputStream inputStream);
+    Mono<String> uploadFromStream(String filename, InputStream inputStream);
 
-  Mono<GridFsResource> getImageFromDatabase(String id);
+    Mono<GridFsResource> getImageFromDatabase(String id);
+
 }

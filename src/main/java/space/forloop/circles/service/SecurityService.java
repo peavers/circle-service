@@ -10,11 +10,12 @@ import reactor.core.publisher.Mono;
  */
 public interface SecurityService {
 
-  /**
-   * Very simple method that will extract the username of the user making a HTTP request from the
-   * {@link ReactiveSecurityContextHolder}
-   *
-   * @return the username of who is making the request
-   */
-  Mono<String> getUsername();
+    /**
+     * Very simple method that will extract the username of the user making a HTTP request from the {@link
+     * ReactiveSecurityContextHolder}
+     *
+     * @return the username of who is making the request
+     */
+    Mono<String> getUsername();
+
 }

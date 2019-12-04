@@ -10,7 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 
-/** @author Chris Turner (chris@forloop.space) */
+/**
+ * @author Chris Turner (chris@forloop.space)
+ */
 @Data
 @Builder
 @Document
@@ -18,13 +20,17 @@ import java.time.Instant;
 @AllArgsConstructor
 public class Post {
 
-  @Id private String id;
+    @Id
+    private String id;
 
-  @NotBlank private String message;
+    @NotBlank
+    private String message;
 
-  private String circleId;
+    private String circleId;
 
-  private String ownerId;
+    private String ownerId;
 
-  @Builder.Default private long created = Instant.now().toEpochMilli();
+    @Builder.Default
+    private long created = Instant.now().toEpochMilli();
+
 }
