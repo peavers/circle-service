@@ -13,38 +13,41 @@ import reactor.core.publisher.Mono;
 import space.forloop.circles.domain.UploadResponse;
 import space.forloop.circles.service.ImageService;
 
-/** @author Chris Turner (chris@forloop.space) */
+/**
+ * @author Chris Turner (chris@forloop.space)
+ */
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 public class ImageController {
 
-  private final ImageService imageService;
+    private final ImageService imageService;
 
-  @GetMapping(value = "/v1/circles/image/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
-  public Mono<GridFsResource> getImage(@PathVariable final String imageId) {
+    @GetMapping(value = "/v1/circles/image/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public Mono<GridFsResource> getImage(@PathVariable final String imageId) {
 
-    return imageService.getImageFromDatabase(imageId);
-  }
+        return imageService.getImageFromDatabase(imageId);
+    }
 
-  @PostMapping(
-      value = "/v1/circles/image",
-      consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-      produces = MediaType.APPLICATION_JSON_VALUE)
-  public Mono<UploadResponse> uploadImage(@RequestBody final Flux<Part> parts) {
+    @PostMapping(
+            value = "/v1/circles/image",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<UploadResponse> uploadImage(@RequestBody final Flux<Part> parts) {
 
-    return parts
-        .collectMap(Part::name)
-        .flatMap(
-            formData -> {
-              final FilePart filePart = (FilePart) formData.get("image");
+        return parts
+                .collectMap(Part::name)
+                .flatMap(
+                        formData -> {
+                            final FilePart filePart = (FilePart) formData.get("image");
 
-              return DataBufferUtils.join(filePart.content())
-                  .flatMap(
-                      buffer ->
-                          imageService.uploadFromStream(
-                              filePart.filename(), buffer.asInputStream()))
-                  .flatMap(id -> Mono.just(UploadResponse.builder().id(id).build()));
-            });
-  }
+                            return DataBufferUtils.join(filePart.content())
+                                    .flatMap(
+                                            buffer ->
+                                                    imageService.uploadFromStream(
+                                                            filePart.filename(), buffer.asInputStream()))
+                                    .flatMap(id -> Mono.just(UploadResponse.builder().id(id).build()));
+                        });
+    }
+
 }

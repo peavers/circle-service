@@ -19,47 +19,50 @@ import reactor.core.publisher.Mono;
 import java.io.InputStream;
 import java.util.Objects;
 
-/** @author Chris Turner (chris@forloop.space) */
+/**
+ * @author Chris Turner (chris@forloop.space)
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
 
-  private final GridFSBucket gridFsBucket;
+    private final GridFSBucket gridFsBucket;
 
-  private final GridFsTemplate gridFsTemplate;
+    private final GridFsTemplate gridFsTemplate;
 
-  @Override
-  public Mono<String> uploadFromStream(final String filename, final InputStream inputStream) {
+    @Override
+    public Mono<String> uploadFromStream(final String filename, final InputStream inputStream) {
 
-    final AsyncInputStream asyncInputStream = AsyncStreamHelper.toAsyncInputStream(inputStream);
+        final AsyncInputStream asyncInputStream = AsyncStreamHelper.toAsyncInputStream(inputStream);
 
-    return Mono.from(
-            gridFsBucket.uploadFromStream(
-                filename, asyncInputStream, createUploadOptions(filename)))
-        .map(ObjectId::toHexString);
-  }
+        return Mono.from(
+                gridFsBucket.uploadFromStream(
+                        filename, asyncInputStream, createUploadOptions(filename)))
+                .map(ObjectId::toHexString);
+    }
 
-  private GridFSUploadOptions createUploadOptions(final String filename) {
+    private GridFSUploadOptions createUploadOptions(final String filename) {
 
-    final GridFSUploadOptions gridFSUploadOptions = new GridFSUploadOptions();
+        final GridFSUploadOptions gridFSUploadOptions = new GridFSUploadOptions();
 
-    final Document document = new Document();
-    document.append("title", filename);
-    document.append("contentType", MediaType.IMAGE_JPEG_VALUE);
-    gridFSUploadOptions.metadata(document);
+        final Document document = new Document();
+        document.append("title", filename);
+        document.append("contentType", MediaType.IMAGE_JPEG_VALUE);
+        gridFSUploadOptions.metadata(document);
 
-    return gridFSUploadOptions;
-  }
+        return gridFSUploadOptions;
+    }
 
-  @Override
-  public Mono<GridFsResource> getImageFromDatabase(final String id) {
+    @Override
+    public Mono<GridFsResource> getImageFromDatabase(final String id) {
 
-    return Mono.fromCallable(
-        () ->
-            this.gridFsTemplate.getResource(
-                Objects.requireNonNull(
-                        this.gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id))))
-                    .getFilename()));
-  }
+        return Mono.fromCallable(
+                () ->
+                        this.gridFsTemplate.getResource(
+                                Objects.requireNonNull(
+                                        this.gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id))))
+                                        .getFilename()));
+    }
+
 }

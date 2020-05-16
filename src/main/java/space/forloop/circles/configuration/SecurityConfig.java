@@ -10,49 +10,55 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.Collections;
 
-/** @author Chris Turner (chris@forloop.space) */
+/**
+ * @author Chris Turner (chris@forloop.space)
+ */
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
-  /**
-   * Blocks all requests that do not have a valid OKTA JWT
-   *
-   * @param http incoming request
-   * @return a filter that will block everything that isn't an authenticated request
-   */
-  @Bean
-  public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
-    return http.authorizeExchange()
-        .pathMatchers("/v1/circles/image/**")
-        .permitAll()
-        .anyExchange()
-        .authenticated()
-        .and()
-        .oauth2Login()
-        .and()
-        .oauth2ResourceServer()
-        .jwt()
-        .and()
-        .and()
-        .build();
-  }
+    /**
+     * Blocks all requests that do not have a valid OKTA JWT
+     *
+     * @param http incoming request
+     *
+     * @return a filter that will block everything that isn't an authenticated request
+     */
+    @Bean
+    public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
 
-  /**
-   * Opens up the world... this should be limited to a specific domain once this is hosted somewhere
-   *
-   * @return configuration of open CORS
-   */
-  @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
-    final CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowCredentials(true);
-    configuration.setAllowedOrigins(Collections.singletonList("*"));
-    configuration.setAllowedMethods(Collections.singletonList("*"));
-    configuration.setAllowedHeaders(Collections.singletonList("*"));
+        return http.authorizeExchange()
+                .pathMatchers("/v1/circles/image/**")
+                .permitAll()
+                .anyExchange()
+                .authenticated()
+                .and()
+                .oauth2Login()
+                .and()
+                .oauth2ResourceServer()
+                .jwt()
+                .and()
+                .and()
+                .build();
+    }
 
-    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
+    /**
+     * Opens up the world... this should be limited to a specific domain once this is hosted somewhere
+     *
+     * @return configuration of open CORS
+     */
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
 
-    return source;
-  }
+        final CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
+        configuration.setAllowedMethods(Collections.singletonList("*"));
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
+
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
+
 }

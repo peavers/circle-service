@@ -13,7 +13,9 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-/** @author Chris Turner (chris@forloop.space) */
+/**
+ * @author Chris Turner (chris@forloop.space)
+ */
 @Data
 @Builder
 @Document
@@ -21,19 +23,24 @@ import java.util.Set;
 @AllArgsConstructor
 public class Circle {
 
-  @Id private String id;
+    @Id
+    private String id;
 
-  @NotBlank(message = "Name value cannot be blank")
-  @Indexed(unique = true)
-  private String name;
+    @NotBlank(message = "Name value cannot be blank")
+    @Indexed(unique = true)
+    private String name;
 
-  private String description;
+    private String description;
 
-  private String featureImage;
+    private String featureImage;
 
-  @Builder.Default private Set<String> members = new HashSet<>();
+    @Builder.Default
+    private Set<String> members = new HashSet<>();
 
-  @Builder.Default private Set<String> owners = new HashSet<>();
+    @Builder.Default
+    private Set<String> owners = new HashSet<>();
 
-  @Builder.Default private long created = Instant.now().toEpochMilli();
+    @Builder.Default
+    private long created = Instant.now().toEpochMilli();
+
 }
