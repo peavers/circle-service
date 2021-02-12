@@ -23,7 +23,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-amqp"
 
     // Okta
-    implementation "com.okta.spring:okta-spring-boot-starter:1.2.1"
+    implementation "com.okta.spring:okta-spring-boot-starter:2.0.1"
 
     // Apache
     implementation(group: 'commons-io', name: 'commons-io', version: '2.6')
